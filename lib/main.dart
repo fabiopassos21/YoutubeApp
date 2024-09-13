@@ -5,6 +5,7 @@ import 'package:youtube/telas/biblioteca.dart';
 import 'package:youtube/telas/emalta.dart';
 import 'package:youtube/telas/inicio.dart';
 import 'package:youtube/telas/inscricao.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 void main() {
   runApp(MaterialApp(debugShowCheckedModeBanner: false, home: Home()));
@@ -19,12 +20,11 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int indiceAtual = 0;
+  String? resultado = "";
   @override
   Widget build(BuildContext context) {
-    Api api = Api();
-    api.pesquisar("");
     List<Widget> telas = [
-      inicio(),
+      Inicio(resultado),
       emalta(),
       inscricao(),
       biblioteca(),
@@ -37,25 +37,23 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.red,
         title: Text('Youtube'),
         actions: [
-        
           IconButton(
-            onPressed: () {
-              showSearch(context: context,
-               delegate: Customsearchdelegate()
-               
-               );
+            onPressed: () async {
+              String? res = await showSearch(
+                  context: context, delegate: Customsearchdelegate());
+              setState(() {
+                resultado = res;
+              });
             },
             icon: Icon(Icons.search),
           )
         ],
       ),
       body: Container(
-          padding: EdgeInsets.all(16),
-          child: Center(
-        child: telas[indiceAtual],
-
-      ), 
-
+        padding: EdgeInsets.all(16),
+        child: Center(
+          child: telas[indiceAtual],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: indiceAtual,
