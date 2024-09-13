@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:youtube/Api.dart';
+import 'package:youtube/telas/CustomSearchDelegate.dart';
 import 'package:youtube/telas/biblioteca.dart';
 import 'package:youtube/telas/emalta.dart';
 import 'package:youtube/telas/inicio.dart';
@@ -36,28 +37,25 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.red,
         title: Text('Youtube'),
         actions: [
+        
           IconButton(
             onPressed: () {
-              print("Ação: WebCam");
-            },
-            icon: Icon(Icons.videocam),
-          ),
-          IconButton(
-            onPressed: () {
-              print("Ação: WebCam");
+              showSearch(context: context,
+               delegate: Customsearchdelegate()
+               
+               );
             },
             icon: Icon(Icons.search),
-          ),
-          IconButton(
-            onPressed: () {
-              print("Ação: WebCam");
-            },
-            icon: Icon(Icons.account_circle),
           )
         ],
       ),
-      body: Center(
+      body: Container(
+          padding: EdgeInsets.all(16),
+          child: Center(
         child: telas[indiceAtual],
+
+      ), 
+
       ),
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: indiceAtual,
